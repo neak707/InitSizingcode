@@ -182,6 +182,3 @@ LD = 12;
 
 CLmaxTO = Wto/(0.5*rho0*Vstall^2*S)
 CLmaxL= (Wto - Wf)/(0.5*rho0*Vstall^2*S)
-cvcxv
-xcv
-
