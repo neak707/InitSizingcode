@@ -59,9 +59,6 @@ TSFC = (0.9+0.3*M0)*sqrt(theta0);
 L_D = 4*(M0+3)/M0; %empirical model
 RF = L_D*V0/(TSFC)*3600; %ft
 
-
-
-
 Wto1 = 105000*2.20462; %lbf
 
 %Fuel Fractions
@@ -116,8 +113,11 @@ Wf = Wto*Wf_0;
 
 Vstall = 219.415; %from 130 knots  Table 4.11
 CLmaxTO = 2; %Table 3.1
-WS_stall = 0.5*rho0*Vstall^2*CLmaxTO;
-WS_landing = 0.5*rho0*(1.3*Vstall)^2*CLmaxTO;
+
+rhoSL = 0.00237717; %
+
+WS_stall = 0.5*rhoSL*Vstall^2*CLmaxTO;
+WS_landing = 0.5*rhoSL*(1.3*Vstall)^2*CLmaxTO;
 
 
 
@@ -129,8 +129,8 @@ K = 1/(pi*e*AR);
 CD0 = 0.025; %pg 127 Table 4.12
 
 Vmax = Vcruise; %pg 126
-WS = linspace(10,50);
-WT_Vmax = ((rho0*Vmax^2*CD0*1./(2*WS)+ 2*K/(rho0*sigma0*Vmax^2)*WS)).^-1;
+WS = linspace(80,200);
+WT_Vmax = 1./((rhoSL*Vmax^2*CD0*1./(2*WS)+ 2*K/(rhoSL*1*Vmax^2)*WS)).^-1;
 
 %% Takeoff Sizing Requirements
 Xto = 7000; %ft maximum takeoff distance
@@ -158,9 +158,11 @@ plot([WS_stall WS_stall], [ystart yend])
 hold on
 plot([WS_landing WS_landing], [ystart yend])
 hold on
-plot(18,13,'*')
-legend('Takeoff', 'Stall','Landing')
-
+plot(WS,WT_Vmax)
+legend('Takeoff', 'Stall','Landing','Max Velocity')
+xlabel('Wing Loading (lbf/ft^2)')
+ylabel('Weight to Thrust (lbf/lbf)')
+title('Sizing Diagram')
 %% Drag Polar
 
 WSloc = 18;
@@ -182,6 +184,7 @@ LD = 12;
 
 CLmaxTO = Wto/(0.5*rho0*Vstall^2*S)
 CLmaxL= (Wto - Wf)/(0.5*rho0*Vstall^2*S)
-cvcxv
-xcv
+
+
+
 
